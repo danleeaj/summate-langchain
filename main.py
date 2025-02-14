@@ -17,7 +17,7 @@ def main():
         studentResponse=STUDENT_RESPONSE
     ))
 
-    print(response)
+    print(response.model_dump_json(indent=2))
 
 if __name__ == "__main__":
     main()
