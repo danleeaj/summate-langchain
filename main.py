@@ -1,6 +1,6 @@
 import yaml
 from app.utils.get_evaluation import get_evaluation
-from app.utils.models.query_model import Query
+from app.models.query_model import Query
 
 def main():
 
