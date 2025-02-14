@@ -3,7 +3,8 @@ import yaml
 import json
 from app.utils.store_debug_log import store_debug_log
 from langchain_core.messages.base import message_to_dict
-from app.utils.models.query_model import Query
+from app.models.query_model import Query
+from app.models.response_model import Response
 
 def get_evaluation(query: Query):
 
@@ -21,7 +22,7 @@ def get_evaluation(query: Query):
     llm = ChatOllama(
         model=MODEL,
         temperature=TEMPERATURE,
-    )
+    ).with_structured_output(schema=Response, include_raw=True)
 
     # Set up message
 
@@ -32,9 +33,14 @@ def get_evaluation(query: Query):
 
     response = llm.invoke(messages)
 
-    content = response.content
-    response = message_to_dict(response)
+    raw_response = response['raw']
+    parsing_error = bool(response['parsing_error'])
+
+    parsed_response = response['parsed'] if not parsing_error else ''
+
+    response = message_to_dict(raw_response)
+    response['parsed'] = str(parsed_response)
 
     path = store_debug_log(response)
 
-    return content, path
+    return parsed_response, path
