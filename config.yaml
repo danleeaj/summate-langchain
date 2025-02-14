@@ -1,0 +1,25 @@
+
+# The prompt that will be sent to the LLM
+prompt: "Evaluate the student's response against the provided rubric."
+
+# Number of times to retry if the JSON parser fails to parse. Lower value results in increased chance of parsing errors, higher value results in potentially requiring more computational power.
+max_retries: 5
+
+# LLM model configuration
+model: "llama3.1:8b"  # Using Llama 3. 18B parameter model
+temperature: 0.2      # Lower temperature for more deterministic outputs
+
+# Example rubric and response.
+
+studentResponse: # The first response is correct, while the second response is wrong
+  - "In Loewi's experiment, he placed two frog hearts in separate solutions. When he stimulated one heart's vagus nerve, that solution slowed the second heart when transferred. This proved nerves communicate using chemicals (neurotransmitters), not just electrical signals."
+  - “Otto Loewi's experiment involved making frogs jump on lily pads while ringing a bell. By feeding the frogs sugar water when they jumped correctly, he proved that frogs could learn through muscle memory.“
+
+rubricComponent: 
+  - {component: Demonstrated that synaptic transmission can rely on chemical as well as electrical signals, score: 2.0}
+  - {component: Accurate notes how Loewi stimulated the first heart, causing the heart rate to slow, score: 1.0}
+  - {component: Mentions vagus nerve, score: 1.0}
+  - {component: Took fluid from the synapse area of original heart, score: 1.5}
+  - {component: Applied that fluid to a second heart and observed the same effect, lower heart rate, score: 1.5}
+  - {component: Applied fluid WITHOUT stimulation, score: 1.5}
+  - {component: Attempted question, score: 1.0}
