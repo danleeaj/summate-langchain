@@ -1,5 +1,8 @@
 from langchain_ollama import ChatOllama
 import yaml
+import json
+from app.utils.store_debug_log import store_debug_log
+from langchain_core.messages.base import message_to_dict
 
 def get_evaluation(rubric_component: str, student_response: str):
 
@@ -29,5 +32,8 @@ def get_evaluation(rubric_component: str, student_response: str):
     response = llm.invoke(messages)
 
     content = response.content
+    response = message_to_dict(response)
 
-    return content
+    path = store_debug_log(response)
+
+    return content, path
