@@ -3,8 +3,9 @@ import yaml
 import json
 from app.utils.store_debug_log import store_debug_log
 from langchain_core.messages.base import message_to_dict
+from app.utils.models.query_model import Query
 
-def get_evaluation(rubric_component: str, student_response: str):
+def get_evaluation(query: Query):
 
 # Load config.yaml, read values and store them into constants
 
@@ -26,7 +27,7 @@ def get_evaluation(rubric_component: str, student_response: str):
 
     messages = [
         ("system", f"{PROMPT}"),
-        ("user", f"""rubricComponent: {rubric_component},\nstudentResponse: {student_response}""")
+        ("user", f"{query.model_dump_json()}")
     ]
 
     response = llm.invoke(messages)

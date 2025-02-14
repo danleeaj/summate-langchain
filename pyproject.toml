@@ -9,4 +9,5 @@ dependencies = [
     "langchain-core>=0.3.35",
     "langchain-ollama>=0.2.3",
     "ollama>=0.4.7",
+    "pydantic>=2.10.6",
 ]

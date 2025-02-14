@@ -1,5 +1,6 @@
 import yaml
 from app.utils.get_evaluation import get_evaluation
+from app.utils.models.query_model import Query
 
 def main():
 
@@ -11,7 +12,10 @@ def main():
     RUBRIC_COMPONENT = config['rubricComponent'][0]['component']
     STUDENT_RESPONSE = config['studentResponse'][0]
 
-    response, path = get_evaluation(rubric_component=RUBRIC_COMPONENT, student_response=STUDENT_RESPONSE)
+    response, path = get_evaluation(Query(
+        rubricComponent=RUBRIC_COMPONENT,
+        studentResponse=STUDENT_RESPONSE
+    ))
 
     print(response)
 
