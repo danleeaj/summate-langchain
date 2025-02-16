@@ -11,3 +11,6 @@ wheels/
 
 # Debug logs
 logs/
+
+# Database
+db/
