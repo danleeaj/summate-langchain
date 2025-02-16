@@ -10,7 +10,7 @@ def get_evaluation(query: Query):
 
 # Load config.yaml, read values and store them into constants
 
-    with open("config.yaml", "r") as f:
+    with open("backend/config.yaml", "r") as f:
         config = yaml.safe_load(f)
 
     PROMPT = config['prompt']
@@ -44,3 +44,17 @@ def get_evaluation(query: Query):
     path = store_debug_log(response)
 
     return parsed_response, path
+
+def evaluate_question(rubric_components: list, student_response: str):
+
+    response_list = []
+    path_list = []
+
+    for component in rubric_components:
+
+        query = Query(rubricComponent=component['component'], studentResponse=student_response)
+        response, path = get_evaluation(query)
+        response_list.append(response)
+        path_list.append(path)
+
+    return response_list, path_list
