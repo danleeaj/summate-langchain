@@ -4,7 +4,7 @@ from app.models.query_model import Query
 
 # Load config.yaml, read values and store them into constants
 
-with open("backend/config.yaml", "r") as f:
+with open("config.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 RUBRIC_COMPONENT = config['rubricComponent'][1]['component']
