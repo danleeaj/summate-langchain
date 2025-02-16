@@ -63,7 +63,7 @@ class DatabaseManager:
         """Adds rubric component. The question ID must be specified. The rubric index is an int used for ordering rubric when returned to the user. Returns: ID (str)"""
         rubric_id = str(uuid.uuid4())
         self.cursor.execute(
-            "INSERT INTO RESPONSE (ID, response, question_id, rubric_index) VALUES (?, ?, ?, ?)",
+            "INSERT INTO RUBRIC (ID, response, question_id, rubric_index) VALUES (?, ?, ?, ?)",
             (rubric_id, component, question_id, rubric_index)
         )
         self.conn.commit()
