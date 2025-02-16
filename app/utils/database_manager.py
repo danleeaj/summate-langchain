@@ -63,7 +63,7 @@ class DatabaseManager:
         """Adds rubric component. The question ID must be specified. The rubric index is an int used for ordering rubric when returned to the user. Returns: ID (str)"""
         rubric_id = str(uuid.uuid4())
         self.cursor.execute(
-            "INSERT INTO RUBRIC (ID, response, question_id, rubric_index) VALUES (?, ?, ?, ?)",
+            "INSERT INTO RUBRIC (ID, component, question_id, rubric_index) VALUES (?, ?, ?, ?)",
             (rubric_id, component, question_id, rubric_index)
         )
         self.conn.commit()
@@ -97,6 +97,16 @@ class DatabaseManager:
         self.cursor.execute("DELETE FROM RUBRIC WHERE question_id = ?", (question_id,))
         self.cursor.execute("DELETE FROM RESPONSE WHERE question_id = ?", (question_id,))
         self.conn.commit()
+    
+    def delete_rubric(self, rubric_id: str):
+        """Delete a rubric."""
+        self.cursor.execute("DELETE FROM RUBRIC WHERE rubric_id = ?", (rubric_id,))
+        self.conn.commit()
+
+    def delete_response(self, response_id: str):
+        """Delete a response."""
+        self.cursor.execute("DELETE FROM RESPONSE WHERE rubric_id = ?", (response_id,))
+        self.conn.commit()
 
     def get_evaluations_for_response(self, response_id: str) -> List[Tuple]:
         """Get all evaluations for a specific response."""
@@ -116,4 +126,4 @@ class DatabaseManager:
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close
+        self.close()
