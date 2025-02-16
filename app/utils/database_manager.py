@@ -4,14 +4,14 @@ from typing import Tuple, List
 import os
 
 class DatabaseManager:
-    def __init__(self):
+    def __init__(self, database_name: str = "database.db"):
 
         current_dir = os.path.dirname(os.path.abspath(__file__))
         app_dir = os.path.dirname(current_dir)
         db_dir = os.path.join(app_dir, "db")
         os.makedirs(db_dir, exist_ok=True)
 
-        self.db_path = os.path.join(db_dir, "database.db")
+        self.db_path = os.path.join(db_dir, database_name)
 
         self.conn = sqlite3.connect(self.db_path)
         self.cursor = self.conn.cursor()
